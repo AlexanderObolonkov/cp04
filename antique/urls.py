@@ -4,6 +4,6 @@ from antique.views import MainView
 
 app_name = 'products'
 
-urlpatterns: [URLResolver, ...] = [
+urlpatterns: list[URLResolver] = [
 
 ]
