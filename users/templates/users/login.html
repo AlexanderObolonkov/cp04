@@ -1,0 +1,57 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+    Войти
+{% endblock %}
+
+{% block page_content %}
+    <section>
+        {% if messages or form.non_field_errors %}
+            <div class="alert alert
+                         {% if messages %} alert-success {% else %} alert-warning {% endif %}
+                         alert-dismissible fade show" role="alert"
+                 style="margin-top: 50px;">
+                {% if messages %}
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                {% else %}
+                    {{ form.non_field_errors }}
+                {% endif %}
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+        <div class="form d-flex justify-content-around">
+            <form class="form-horizontal" role="form" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="form-group mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="control-label">Логин</label>
+                        <div>
+                            {{ form.username }}
+                        </div>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label for="{{ form.password.id_for_label }}" class="control-label">Пароль</label>
+                        <div>
+                            {{ form.password }}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <small>
+                            Нет аккаунта?
+                            <a class="link" href="{% url 'users:registration' %}">Зарегестрируйтесь!</a>
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <button type="submit" class="btn btn-primary">Войти</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

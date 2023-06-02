@@ -1,0 +1,32 @@
+{% extends 'antique/base.html' %}
+{% load static %}
+
+{% block title %}{{ position.antique_id }}: {{ position.antique_production.name }}{% endblock %}
+
+{% block page_content %}
+    <div class="main-content">
+        <section class="story-content">
+            <div class="container">
+                <h1>{{ position.antique_id }}: {{ position.antique_production.name }}</h1>
+                <p>
+                    {{ position.antique_production.description }}
+                </p>
+                <div class="container">
+                    <p>Цена: {{ position.price }} руб</p>
+                    <p>Дата: {{ position.creaction_date|default_if_none:"Неизветсно" }}</p>
+                    <p>Доступно по адресу: {{ position.room.address|default_if_none:"Неизветсно" }}</p>
+                    <p>Состояние: {{ position.antique_condition.name|default_if_none:"Неизветсно" }}</p>
+                    <p>Статус: {{ position.status.name|default_if_none:"Неизветсно" }}</p>
+                    <p>Фабрика-производитель: {{ position.antique_production.manufacturer.name|default_if_none:"" }}</p>
+                    <p>
+                        Авторы:
+                        {% for author in authors %}
+                            {{ author }}<br>
+                        {% endfor %}
+                    </p>
+                    <a class="nav-link" href="{% url 'antique:antique_catalog' %}">Назад к каталогу</a>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

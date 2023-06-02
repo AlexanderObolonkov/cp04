@@ -1,0 +1,80 @@
+{% extends 'antique/base.html' %}
+
+{% block title %}
+    Профиль
+{% endblock %}
+
+{% block page_content %}
+    <div class="container">
+        {% if form.errors %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert"
+                 style="margin-top: 50px;">
+                {{ form.errors }}
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+        <div class="row justify-content-center">
+            <section>
+                <h3>
+                    {% if user.is_superuser %}
+                        Администратор
+                    {% elif user.is_staff %}
+                        Сотрудник
+                    {% else %}
+                        Клиент
+                    {% endif %}
+                </h3>
+                <form action="{% url 'users:profile' %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="small mb-1" for="{{ form.first_name.id_for_label }}">
+                                    Имя
+                                </label>
+                                {{ form.first_name }}
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="small mb-1" for="{{ form.last_name.id_for_label }}">
+                                    Фамилия
+                                </label>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="small mb-1" for="{{ form.first_name.id_for_label }}">
+                                    Отчество
+                                </label>
+                                {{ form.patronymic }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb-3">
+                            <label class="small mb-1" for="{{ form.username.id_for_label }}">
+                                Имя пользователя
+                            </label>
+                            {{ form.username }}
+                        </div>
+                        <div class="col-lg-4 col-sm-6 mb-3">
+                            <label class="small mb-1" for="{{ form.email.id_for_label }}">
+                                Адрес электронной почты
+                            </label>
+                            {{ form.email }}
+                        </div>
+                    </div>
+                    <div class="form-group mt-4 mb-0">
+                        <input class="btn btn-primary btn-block" type="submit" value="Сохранить">
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+{% endblock %}

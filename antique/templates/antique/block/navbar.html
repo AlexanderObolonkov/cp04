@@ -16,108 +16,59 @@
                     <a class="nav-link {% if nav_bar == 'index' %}active{% endif %}"
                        href="{% url 'index' %}">Главная</a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modal-cart">Корзина</a>
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link  {% if navbar == 'account' %}active{% endif %}"
+                           href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Аккаунт
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a>
+                            </li>
+                            {% if user.is_superuser or user.is_stuff %}
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'admin:index' %}">
+                                        Админ-панель
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'users:logout' %}">
+                                    Выйти
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{% url 'users:login' %}">Авторизация</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link  {% if nav_bar == 'catalog' %}active{% endif %}"
+                       href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Каталог
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'antique:antique_catalog' %}">Каталог антиквариата</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'antique:author_catalog' %}">Каталог авторов</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if nav_bar == 'contacts' %}active{% endif %}" href="#">Контакты</a>
+                    <a class="nav-link {% if nav_bar == 'contacts' %}active{% endif %}"
+                       href="{% url 'users:contacts' %}">Написать нам</a>
                 </li>
-                <div class="modal fade" id="modal-cart" tabindex="-1" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header bg-body-secondary">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Корзина</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Фото</th>
-                                        <th scope="col">Позиция</th>
-                                        <th scope="col">Шт.</th>
-                                        <th scope="col">Стоимость</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    <tr>
-                                        <td>...</td>
-                                        <td>...</td>
-                                        <td>
-                                            <div class="select-amount">
-                                                <select class="form-select" aria-label="Шт.">
-                                                    <option selected value="1">1 шт.</option>
-                                                    <option value="2">2 шт.</option>
-                                                    <option value="3">3 шт.</option>
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td>...</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <h3>Итого: ... руб.</h3>
-                                <button type="button" class="btn btn-primary">Перейти к оформлению заказа</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="modal-cart" tabindex="-1" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header bg-body-secondary">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Корзина</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Фото</th>
-                                        <th scope="col">Позиция</th>
-                                        <th scope="col">Шт.</th>
-                                        <th scope="col">Стоимость</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    <tr>
-                                        <td>...</td>
-                                        <td>...</td>
-                                        <td>
-                                            <div class="select-amount">
-                                                <select class="form-select" aria-label="Шт.">
-                                                    <option selected value="1">1 шт.</option>
-                                                    <option value="2">2 шт.</option>
-                                                    <option value="3">3 шт.</option>
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td>...</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <h3>Итого: ... руб.</h3>
-                                <button type="button" class="btn btn-primary">Перейти к оформлению заказа</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <li class="nav-item">
-                  <a class="nav-link" href="#">Отзывы</a> и т.д. можно добавлять
-                </li>  -->
             </ul>
         </div>
     </div>

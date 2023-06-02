@@ -1,0 +1,73 @@
+{% extends 'antique/base.html' %}
+{% load static %}
+
+{% block title %}ANTIQUE HOUSE{% endblock %}
+
+{% block page_content %}
+    <section class="products-content">
+        <div class="container">
+            <h1 class="text-uppercase text-center mb-5">Авторы</h1>
+            <div class="row">
+                {% for author in page_obj %}
+                    <div class="col-lg-4 col-sm-6 mb-3">
+                        <div class="product-card">
+                            <div class="product-details">
+                                <h2><a href="#">{{ author.name }} {{ author.surname }} {{ author.patronymic }}</a></h2>
+                                <p>Биография: <br>
+                                    {% if author.biography %}
+                                    {{ author.biography|safe }}
+                                    {% else %}
+                                        ...
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="product-bottom-delails d-flex justify-content-between">
+                                <div class="product-links">
+                                    <p>Страна: {{ author.country }}</p>
+                                    <p>Годы жизни:
+                                        {% if author.birth_date %}
+                                            {{ author.birth_date }} -
+                                            {% if author.death_date %}
+                                                {{ author.death_date }}
+                                            {% endif %}
+                                        {% endif %}
+                                    </p>
+                                    <a href="#">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="container">
+            <nav aria-label="Paginate me">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                           tabindex="-1">Предыдущая</a>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link disabled" href="#" tabindex="-1">Предыдущая</a>
+                        </li>
+                    {% endif %}
+                    {% for i in page_obj.paginator.page_range %}
+                        {% if i == page_obj.number %}
+                            <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Следующая</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <br>
+        </div>
+    </section>
+{% endblock %}
