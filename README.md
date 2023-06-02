@@ -2,4 +2,4 @@
 
 ## Сайт антикварной лавки
 
-<img src="https://raw.githubusercontent.com/AlexanderObolonkov/cp04/main/static/img/logo.png?token=GHSAT0AAAAAAB5QQB3AC2WRHRY6JM62J45OZDRY3SQ" alt="logo" width="200">
+<img src="static/img/logo.png" alt="logo" width="200">
